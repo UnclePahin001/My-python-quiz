@@ -1,2 +1,90 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+"""This is a Python3 based Te Reo quiz"""
+"""Made by UnclePahin in VisualStudioCode"""
+
+
+def new_game():  
+    """Starts the quiz and checks the answer to update scorecard."""
+    guesses = []
+    correct_guesses = 0
+    question_num = 1
+
+    for key in questions:
+        print("-------------------------")
+        print(key)
+        for i in options[question_num-1]:
+            print(i)
+        guess = input("Enter (A, B, C, or D): ")
+        guess = guess.upper()
+        guesses.append(guess)
+
+        correct_guesses += check_answer(questions.get(key), guess)
+        question_num += 1
+
+    display_score(correct_guesses, guesses)
+
+
+# Answer checker
+def check_answer(answer, guess):
+    """Checks to see if the answer is correct or incorrect."""
+    if answer == guess:
+        print("CORRECT!")
+        return 1
+    else:
+        print("WRONG!")
+        return 0
+
+
+# Score Display + User input
+def display_score(correct_guesses, guesses):
+    """Displays the final score and user inputs."""
+    print("-------------------------")
+    print("YOUR QUIZ RESULTS")
+    print("-------------------------")
+
+    print("Answers: ", end="")
+    for i in questions:
+        print(questions.get(i), end=" ")
+    print()
+
+    print("Guesses: ", end="")
+    for i in guesses:
+        print(i, end=" ")
+    print()
+
+    score = int((correct_guesses/len(questions))*100)
+    print("Your score is: "+str(score)+"%")
+
+
+# Restart or termination of program
+def play_again():
+    """Restarts programme or terminates based off of user input."""
+    response = input("Do you want to play again? (yes or no): ")
+    response = response.upper()
+
+    if response == "YES":
+        return True
+    else:
+        return False
+# Questions
+
+questions = {
+ "What is the te reo word for Auckland?: ": "A",
+ "What is the te reo word for Wellington?  ": "B",
+ "What is the te reo word for Christchurch? ": "C",
+ "What is the te reo word for Dunedin?": "D",
+ "What is the te reo word for Hamilton?": "B"
+}
+
+options = [["A. Tamaki Makaurau", "B. awa", "C. kātao", "D. whekuwheku"],
+          ["A. The manager", "B. Pōneke", "C. The exit", "D. The carpark"],
+          ["A. Option", "B. Option", "C. Ōtautahi", "D. Option"],
+          ["A. Happy","B. Quiet", "C. On time", "D. Tanītana"],
+          ["A. Happy","B. Hamutana", "C. On time", "D. Tanītana"]]
+new_game()
+
+while play_again():
+    new_game()
+
+print("Thank you for playing!")
